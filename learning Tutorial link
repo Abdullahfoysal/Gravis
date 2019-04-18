@@ -3,3 +3,9 @@ https://www.youtube.com/watch?v=qik60F5I6J4&list=PLXY8okVWvwZ0qmqSBhOtqYRjzWtUCW
 
 2.Box2D physics (LibGDX):
 https://www.youtube.com/watch?v=zDEQycnhaAc&list=PLXY8okVWvwZ2Ph9LKWiNBZ1GRAc_TyDru
+
+3.Parsing Tiled tmx map objects into box2D bodies using SFML:
+video link:
+https://www.youtube.com/watch?v=3EukqhrU8ms
+github sources:
+https://github.com/fallahn/sfml-tmxloader
