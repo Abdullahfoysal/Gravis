@@ -12,7 +12,9 @@ import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.TweenManager;
+import net.dermetfan.blackpoint2.Physics3;
 import net.dermetfan.blackpoint2.Play;
+import net.dermetfan.blackpoint2.SpritePhysics;
 import net.dermetfan.blackpoint2.tween.SpriteAccessor;
 
 public class Splash implements Screen {
@@ -40,7 +42,7 @@ public class Splash implements Screen {
 			
 			@Override
 			public void onEvent(int type, BaseTween<?> source) {
-				((Game) Gdx.app.getApplicationListener()).setScreen(new Play());
+				((Game) Gdx.app.getApplicationListener()).setScreen( new Play());
 				
 				
 		 	}

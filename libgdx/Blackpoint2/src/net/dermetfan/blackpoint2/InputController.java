@@ -52,4 +52,9 @@ public class InputController implements InputProcessor {
 		return false;
 	}
 
+	public boolean KeyUp(int keycode) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

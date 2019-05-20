@@ -14,7 +14,8 @@ public class Blackpoint2 extends Game {
 	public static final String TITLE="BLACKPOINT GAME",VERSION="0.000.001.ReallyEarly";
 	@Override
 	public void create () {
-	    setScreen(new Splash());
+		
+	    setScreen(new finalPractice());
 	}
 	
 	@Override
