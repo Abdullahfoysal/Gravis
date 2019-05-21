@@ -21,8 +21,11 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.joints.DistanceJointDef;
+import com.badlogic.gdx.physics.box2d.joints.RopeJointDef;
 import com.badlogic.gdx.utils.Array;
 
+import net.dermetfan.blackpoint.entities.Car;
 import net.dermetfan.blackpoint2.screens.Splash;
 
 public class Play implements Screen {
@@ -43,6 +46,8 @@ public class Play implements Screen {
 	private Sprite boxSprite, boxSprite2, shapeSprite;
 	private SpriteBatch batch;
 	private Array<Body> tmpBodies = new Array<Body>();
+	
+	private Car car;
 
 	@Override
 	public void render(float delta) {
@@ -50,6 +55,7 @@ public class Play implements Screen {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		world.step(TIMESTEP, VELOCITYITERATIONS, POSITIONITERATIONS);
+		box2.applyTorque(7f,true);
 		box1.applyForceToCenter(movement, true);
 		box2.applyForceToCenter(movement2, true);
 		camera.position.set(box1.getPosition().x,box1.getPosition().y,0);
@@ -225,7 +231,8 @@ public class Play implements Screen {
 		boxSprite2.setSize(1, 2);// full width and height
 		boxSprite2.setOrigin(boxSprite2.getWidth() / 2, boxSprite2.getHeight() / 2);
 		box2.setUserData(boxSprite2);
-
+		
+		
 		// groundShape
 		// body Defination
 		// BodyDef bodyDef=new BodyDef();
@@ -241,15 +248,74 @@ public class Play implements Screen {
 		fixtureDef.friction = 0.5f;
 		fixtureDef.restitution = 0;
 
-		world.createBody(bodyDef).createFixture(fixtureDef);
+	Body ground=world.createBody(bodyDef);
+	ground.createFixture(fixtureDef);
 		groundShape.dispose();
 		/// another shape soil plain
 
 		ChainShape groundShape2 = new ChainShape();
 		groundShape2.createChain(new Vector2[] { new Vector2(-2, -3), new Vector2(2, -0.6f) });
 		// box1.createFixture(fixtureDef);
-		world.createBody(bodyDef).createFixture(fixtureDef);
+	Body ground2=world.createBody(bodyDef);
+	ground2.createFixture(fixtureDef);
 		groundShape2.dispose();
+
+		/// joint another box with box1
+				bodyDef.type=BodyDef.BodyType.StaticBody;
+				bodyDef.position.y=10;
+				PolygonShape otherBoxShape=new PolygonShape();
+				otherBoxShape.setAsBox(1f,1f);
+				
+				fixtureDef.shape=otherBoxShape;
+				fixtureDef.friction = 0.75f;
+				fixtureDef.restitution = 0.1f;
+				fixtureDef.density = 5f;
+				
+				Body otherBox=world.createBody(bodyDef);
+				otherBox.createFixture(fixtureDef);
+				otherBoxShape.dispose();
+				
+				//DistansceJoint between other box and box1
+				DistanceJointDef distanceJointDef=new DistanceJointDef();
+				distanceJointDef.bodyA= otherBox;
+				distanceJointDef.bodyB=box1;
+				distanceJointDef.length=5;
+				distanceJointDef.localAnchorA.set(0,0);
+				distanceJointDef.localAnchorB.set(0,0);
+				
+				world.createJoint(distanceJointDef);
+				
+				//RopeJoint between ground and box
+				RopeJointDef ropeJointDef=new RopeJointDef();
+				ropeJointDef.bodyA=box1;
+				ropeJointDef.bodyB=ground;
+				ropeJointDef.maxLength=20;
+				ropeJointDef.localAnchorA.set(0,0);
+				ropeJointDef.localAnchorB.set(0,-1);
+				world.createJoint(ropeJointDef);
+				
+				
+				//car
+				BodyDef carbodyDef=new BodyDef();
+				FixtureDef carfixtureDef=new FixtureDef(),wheelFixtureDef=new FixtureDef();
+				
+				carfixtureDef.density=5f;
+				carfixtureDef.friction=0.4f;
+				carfixtureDef.restitution=0.3f;
+				
+				wheelFixtureDef.density=carfixtureDef.density-0.5f;
+				wheelFixtureDef.friction=1f;
+				wheelFixtureDef.restitution=0.4f;
+				
+				
+			car =new Car(world,carfixtureDef,wheelFixtureDef,0,3,3,1.5f);	
+				
+				
+				
+				
+				
+				
+				
 
 	}
 

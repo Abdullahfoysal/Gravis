@@ -15,7 +15,7 @@ public class Blackpoint2 extends Game {
 	@Override
 	public void create () {
 		
-	    setScreen(new finalPractice());
+	    setScreen(new Play());
 	}
 	
 	@Override

@@ -123,7 +123,7 @@ public class Physics3 extends ApplicationAdapter {
       		groundShape.dispose();
 
         camera = new OrthographicCamera(Gdx.graphics.getWidth(),Gdx.graphics.
-                getHeight());
+                  getHeight());
 
         world.setContactListener(new ContactListener() {
             @Override
