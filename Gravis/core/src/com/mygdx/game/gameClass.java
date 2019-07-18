@@ -8,11 +8,16 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class gameClass extends Game {
-
+	public static final float PPM=100;
+	public static final int v_width=1028;
+	public static final int v_height=700;
+	
+	public SpriteBatch batch;
 	
 	@Override
 	public void create () {
-		setScreen(new Play());
+		batch=new SpriteBatch();
+		setScreen(new PlayScreen(this));
 	}
 
 	@Override

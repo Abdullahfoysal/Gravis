@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="75" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="11">
+ <tileset firstgid="1" name="collision" tilewidth="16" tileheight="16" tilecount="496" columns="31">
+  <image source="maptest.png" width="502" height="263"/>
+ </tileset>
+ <objectgroup id="2" name="collision_layer2">
+  <object id="4" x="220" y="382.667" width="136" height="56"/>
+  <object id="5" x="440" y="310.667" width="82.6667" height="116"/>
+  <object id="6" x="577.333" y="384" width="77.3333" height="105.333"/>
+  <object id="7" x="718.667" y="548" width="241.333" height="58.6667"/>
+  <object id="8" x="270.667" y="568" width="306.667" height="50.6667"/>
+  <object id="9" x="452" y="178.667"/>
+  <object id="10" x="1377.33" y="106.667"/>
+ </objectgroup>
+ <layer id="3" name="collision_layer" width="75" height="48">
+  <data encoding="base64" compression="zlib">
+   eJztllkOgzAMRHMfboLagzTt/b8LH5EslywOCUv6njQSEoQYzzjCOQAAAAC4Oo9Fz7OLuAnvRZ+ziwAAAAAAAAAAAAC4AC8liDMrQRxyBVAP81MO53I55Koflt5afRjNN8vMWud7tPPgDrmaxPt03yelEfJbS+hBuJZ9l72b3TizfhT/2qv1u737zY3W+ozMnD4nc9Lvs67P1bdXqb3Ctc+s2erTmerR/5gHuXt7fDhCOV975Mob9tLP6SweKS+UuidVm6uwfmumLB7F6uot/f8S0x4P9F7WLGmV1txatbNb40FJDktmrLbm1pI1p/LUwoPUXqk1X71K1IM=
+  </data>
+ </layer>
+</map>

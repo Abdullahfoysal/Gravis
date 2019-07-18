@@ -7,6 +7,9 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
@@ -26,56 +29,61 @@ public class Play implements Screen{
 	private Body b_ground,b_box,b_border,b_border2,b_joint;
 	private final float pxm=32;
 	private Array<Body> tmpBodies = new Array<Body>();
+	private TiledMap map;
+	private OrthogonalTiledMapRenderer tmr;
+	
 
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0,0,0,1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
-		update();
-
+		//update();
+		
+		tmr.setView(camera);
+		
+		tmr.render();
+	
+		
 		
 		batch.setProjectionMatrix(camera.combined);
-//		
-//		  batch.begin(); 
-//		  batch.draw(t_box,b_box.getPosition().x*32-t_box.getWidth()/2,b_box.getPosition().y*32-t_box.getHeight()/2 ); 
-//		  batch.end();
+
 		 
-		batch.begin();
-		world.getBodies(tmpBodies);
-		for(Body body:tmpBodies)		
-			if(body.getUserData()!=null && body.getUserData() instanceof Sprite) {
-			Sprite sprite=(Sprite) body.getUserData();
-			sprite.setPosition(body.getPosition().x-sprite.getWidth()/2, body.getPosition().y-sprite.getHeight()/2);
-			sprite.setRotation(body.getAngle()*MathUtils.radiansToDegrees);
-			sprite.draw(batch);
-			}
-		batch.end();
+//		batch.begin();
+//		world.getBodies(tmpBodies);
+//		for(Body body:tmpBodies)		
+//			if(body.getUserData()!=null && body.getUserData() instanceof Sprite) {
+//			Sprite sprite=(Sprite) body.getUserData();
+//			sprite.setPosition(body.getPosition().x-sprite.getWidth()/2, body.getPosition().y-sprite.getHeight()/2);
+//			sprite.setRotation(body.getAngle()*MathUtils.radiansToDegrees);
+//			sprite.draw(batch);
+//			}
+//		batch.end();
 		
 		debugRenderer.render(world, camera.combined);
 		 
 	}
 	public void update() {
-		world.step(1f/60f, 8, 3);
-		inputUpdate();
+		//world.step(1f/60f, 8, 3);
+//		inputUpdate();
 	}
 	public void inputUpdate() {
 		int horizontalForce=0;
 		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
 			horizontalForce-=1;
-			b_border.setLinearVelocity(horizontalForce*5,b_border.getLinearVelocity().y);	
-			b_border.applyTorque(30, true);
+		//	b_border.setLinearVelocity(horizontalForce*5,b_border.getLinearVelocity().y);	
+			//b_border.applyTorque(30, true);
 			//b_box.applyTorque(30, true);
 		}
 		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
 			horizontalForce+=1;
-			b_border.setLinearVelocity(horizontalForce*5,b_border.getLinearVelocity().y);
-			b_border.applyTorque(30, true);
+			//b_border.setLinearVelocity(horizontalForce*5,b_border.getLinearVelocity().y);
+		//	b_border.applyTorque(30, true);
 
 //			b_ground.applyForceToCenter(1, 15,false);
 		}
 		if(Gdx.input.isKeyPressed(Input.Keys.UP)) {
-			b_box.applyForceToCenter(0,30,false);
+			//b_box.applyForceToCenter(0,30,false);
 //			b_box.applyAngularImpulse(100,true);
 //			b_box.applyTorque(30, true);
 			
@@ -92,24 +100,31 @@ public class Play implements Screen{
 		 debugRenderer = new Box2DDebugRenderer();
 		 
 		batch = new SpriteBatch();
-		camera = new OrthographicCamera(Gdx.graphics.getWidth()/10,Gdx.graphics.getHeight()/10);
+		camera = new OrthographicCamera(Gdx.graphics.getWidth()/20,Gdx.graphics.getHeight()/20);
+		///creating every body
+//		b_border=createBorder( new float[] {10,10,15,0,30,0});	
+//		b_border2=createBorder(new float[] {30,0,45,0,55,15});
+//	    b_ground=createArea();
+		//b_box=creatPlayer();
 		
-		b_border=createBorder( new float[] {10,10,15,0,30,0});	
-		b_border2=createBorder(new float[] {30,0,45,0,55,15});
-	    b_ground=createArea();
-		b_box=creatPlayer();
+		//map loading
+		map=new TmxMapLoader().load("map/test2Map.tmx");
+		tmr=new OrthogonalTiledMapRenderer(map);
+	
+		
+		TiledObjectUtil.parseTiledObjectLayer(world, map.getLayers().get("collision_layer").getObjects());
 
 		
 		//DistansceJoint between other box and box1
-		DistanceJointDef distanceJointDef=new DistanceJointDef();
-		distanceJointDef.bodyA= b_border;
-		distanceJointDef.bodyB=b_border2;
-		distanceJointDef.length=1;
-		distanceJointDef.localAnchorA.set(30,0);
-		distanceJointDef.localAnchorB.set(30,0);
-		
-		
-		world.createJoint(distanceJointDef);
+//		DistanceJointDef distanceJointDef=new DistanceJointDef();
+//		distanceJointDef.bodyA= b_border;
+//		distanceJointDef.bodyB=b_border2;
+//		distanceJointDef.length=1;
+//		distanceJointDef.localAnchorA.set(30,0);
+//		distanceJointDef.localAnchorB.set(30,0);
+//		
+//		
+//		world.createJoint(distanceJointDef);
 		
 		
 		
@@ -241,8 +256,9 @@ BodyDef bodyDef=new BodyDef();
 
 	@Override
 	public void resize(int width, int height) {
-		camera.viewportWidth = width / 20;
-		camera.viewportHeight = height / 20;		
+		camera.viewportWidth = width*pxm/6 ;
+		camera.viewportHeight = height*pxm/6 ;	
+		camera.update();
 	}
 
 	@Override
@@ -267,6 +283,8 @@ BodyDef bodyDef=new BodyDef();
 		world.dispose();
 		debugRenderer.dispose();
 		batch.dispose();
+		map.dispose();
+		tmr.dispose();
 		
 	}
 	
