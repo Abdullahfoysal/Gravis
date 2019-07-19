@@ -1,0 +1,33 @@
+
+againCheck1.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+jumping
+  rotate: false
+  xy: 0, 0
+  size: 1054, 225
+  orig: 1054, 225
+  offset: 0, 0
+  index: -1
+sleeping
+  rotate: false
+  xy: 0, 225
+  size: 1054, 225
+  orig: 1054, 225
+  offset: 0, 0
+  index: -1
+standing
+  rotate: false
+  xy: 0, 450
+  size: 1054, 225
+  orig: 1054, 225
+  offset: 0, 0
+  index: -1
+running
+  rotate: false
+  xy: 0, 675
+  size: 1054, 225
+  orig: 1054, 225
+  offset: 0, 0
+  index: -1
