@@ -14,7 +14,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 
 public class TiledObjectUtil {
-	private final static float pxm=32;
+
 	private World world;
 	private TiledMap map;
 	private PolygonShape shape;
@@ -40,27 +40,7 @@ public class TiledObjectUtil {
 				fdef.shape=shape;
 				body.createFixture(fdef);
 				
-			}
-              
-			
-			
-		
-		//bricks physics add
-//           for(MapObject object:map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
-//				
-//				 rect=((RectangleMapObject) object).getRectangle();
-//				bdef.type=BodyDef.BodyType.StaticBody;
-//				bdef.position.set((rect.getX()+rect.getWidth()/2)/gameClass.PPM,(rect.getY()+rect.getHeight()/2)/gameClass.PPM);
-//				body=world.createBody(bdef);
-//				
-//				shape.setAsBox(rect.getWidth()/2/gameClass.PPM, rect.getHeight()/2/gameClass.PPM);
-//				
-//				fdef.shape=shape;
-//				body.createFixture(fdef);
-//				
-//			}
-			 
-			 
+			}			 
 		
 		
 	}
@@ -78,7 +58,14 @@ public class TiledObjectUtil {
             BodyDef bodyDef = new BodyDef();
             bodyDef.type = BodyDef.BodyType.StaticBody;
             body = world.createBody(bodyDef);
-            body.createFixture(shape,1.0f);
+            FixtureDef fdef=new FixtureDef();
+            fdef=Fixture(fdef,object.getName());
+            fdef.shape=shape;
+            fdef.density=0.30f;
+            fdef.friction=0.45f;
+            fdef.restitution=0.25f;
+            body.createFixture(fdef);
+            
             shape.dispose();
         }
     }
@@ -97,5 +84,16 @@ public class TiledObjectUtil {
        chainShape.createChain(worldVertices);
 
         return chainShape;
+    }
+    
+    public static FixtureDef Fixture(FixtureDef ff,String string) {
+    	if(string=="spring")System.out.println("hi");
+    	if(string=="spike")System.out.println("hi2");
+    	
+	
+    	
+    	return ff;
+    	
+    	
     }
 }

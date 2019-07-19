@@ -60,14 +60,14 @@ public class Player extends Sprite {
 		FixtureDef fdef=new FixtureDef();
 		 
 		
-	//	CircleShape shape=new CircleShape();
-	 //   shape.setRadius(20f/gameClass.PPM);
+		//CircleShape shape=new CircleShape();
+	   // shape.setRadius(20f/gameClass.PPM);
 	    PolygonShape shape=new PolygonShape();
-		shape.setAsBox(0.2f,0.2f);
+		shape.setAsBox(0.15f,0.15f);
 		fdef.shape=shape;
-		fdef.friction=1f;
-		 fdef.restitution=0.35f;
-		 fdef.density=0.75f;
+		fdef.friction=0.65f;
+		 fdef.restitution=0f;
+		 fdef.density=1f;
 		b2body.createFixture(fdef);
 				
 	}

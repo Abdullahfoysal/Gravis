@@ -55,11 +55,12 @@ public class PlayScreen implements Screen {
 	private Vector2 gavityDirection=new Vector2(0,-9.8f);
 	
 	private Vector s=new Vector();
+	private Vector s2=new Vector();
 	private Sprite sprite;
 	private Sprite a,b,c,d;
 	private Texture texture;
 	private float stateTimer=0f;
-	
+	private boolean playerDirection=true;
 	public PlayScreen(gameClass game) {
 		this.game=game;
 		hud=new Hud(game.batch);
@@ -108,7 +109,7 @@ public class PlayScreen implements Screen {
 	}
 	public int givePos()
 	{
-		int x=6;
+		int x=10;
 		pospos++;
 		pospos%=(4*x);
 		return (pospos/x);
@@ -127,15 +128,15 @@ public class PlayScreen implements Screen {
 		game.batch.setProjectionMatrix(gamecam.combined);
 		
 		game.batch.begin();
-		//player.draw(game.batch);
-//		for(int i=0;i<s.size();i++) {
-//			sprite=(Sprite) s.get(i);
-//
-//		game.batch.draw(sprite,0.45f+player.b2body.getPosition().x-sprite.getWidth()/2/gameClass.PPM,0.1f+player.b2body.getPosition().y-sprite.getHeight()/2/gameClass.PPM/3, 134/gameClass.PPM/2, 220/gameClass.PPM/2);
-//		
-//		}
+		float x=0;
+		if(playerDirection==true)
 		sprite=(Sprite) s.get(pos);
-		game.batch.draw(sprite,0.45f+player.b2body.getPosition().x-sprite.getWidth()/2/gameClass.PPM,0.1f+player.b2body.getPosition().y-sprite.getHeight()/2/gameClass.PPM/3, 134/gameClass.PPM/2, 220/gameClass.PPM/2);
+		else {
+			sprite=(Sprite) s2.get(pos);
+			x=-0.15f;
+		}
+		
+		game.batch.draw(sprite,x+0.45f+player.b2body.getPosition().x-sprite.getWidth()/2/gameClass.PPM,0.1f+player.b2body.getPosition().y-sprite.getHeight()/2/gameClass.PPM/3, 134/gameClass.PPM/2, 220/gameClass.PPM/2);
 		game.batch.end();
 		
 		game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
@@ -155,12 +156,32 @@ public class PlayScreen implements Screen {
 	}
 	public void handleInput(float dt) {
 		
-		if(Gdx.input.isKeyJustPressed(Input.Keys.UP))
+		if(Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
 			player.b2body.applyLinearImpulse(new Vector2(0,0.25f), player.b2body.getWorldCenter(), true);
-		if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().x<=2)
-			player.b2body.applyLinearImpulse(new Vector2(0.1f,0), player.b2body.getWorldCenter(), true);
-		if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x>=-2)
+			player.b2body.applyForceToCenter(new Vector2(0,0.5f), true); 
+		}
+			
+		if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().x<=2) {
+			if(playerDirection==false) {
+				playerDirection=true;
+//				sprite=(Sprite) s.get(givePos());
+			}
+			
+			player.b2body.applyForceToCenter(new Vector2(0,0.25f), true); 
+	    	player.b2body.applyLinearImpulse(new Vector2(0.25f,0), player.b2body.getWorldCenter(), true);
+			
+		}
+			
+		if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x>=-2) {
+			if(playerDirection==true) {
+				playerDirection=false;
+//				sprite=(Sprite) s2.get(givePos());
+			}
+			
+			player.b2body.applyForceToCenter(new Vector2(-0.5f,0f), true); 
 			player.b2body.applyLinearImpulse(new Vector2(-0.1f,0), player.b2body.getWorldCenter(), true);
+		}
+			
 		
 	
 		
@@ -178,7 +199,6 @@ public class PlayScreen implements Screen {
 	public void update(float dt) {
 		world.step(1f/60f, 8, 2);
 		handleInput(dt);
-		playerAnimation(dt);
 		
 		
 		
@@ -262,17 +282,14 @@ public class PlayScreen implements Screen {
 		s.add(c);
 		s.add(d);
 		
-	}
-	public void playerAnimation(float dt) {
 		
-//		stateTimer+=dt;
-//		if(stateTimer>0.01)
-//		for(int i=0;i<s.size();i++) {
-//			sprite=(Sprite) s.get(i);
-//			player.update(dt,sprite);
-//			
-//			
-//		}
+		
+		s2.add(new Sprite(new Texture("Sprite/a.png")));
+		s2.add(new Sprite(new Texture("Sprite/b.png")));
+		s2.add(new Sprite(new Texture("Sprite/c.png")));
+		s2.add(new Sprite(new Texture("Sprite/d.png")));
+//		
 	}
+	
 
 }
