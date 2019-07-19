@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="4" height="1" tilewidth="280" tileheight="310" infinite="0" nextlayerid="5" nextobjectid="1">
+ <tileset firstgid="1" name="spriteMakaing" tilewidth="281" tileheight="312" tilecount="16" columns="0">
+  <grid orientation="orthogonal" width="1" height="1"/>
+  <tile id="0">
+   <image width="160" height="300" source="../../../../../../../Desktop/SpriteAll/standing/1.png"/>
+  </tile>
+  <tile id="1">
+   <image width="160" height="300" source="../../../../../../../Desktop/SpriteAll/standing/2.png"/>
+  </tile>
+  <tile id="2">
+   <image width="160" height="300" source="../../../../../../../Desktop/SpriteAll/standing/3.png"/>
+  </tile>
+  <tile id="3">
+   <image width="160" height="300" source="../../../../../../../Desktop/SpriteAll/standing/4.png"/>
+  </tile>
+  <tile id="4">
+   <image source="../../../../../../../Desktop/SpriteAll/standing/5.sliping.png"/>
+  </tile>
+  <tile id="5">
+   <image width="160" height="300" source="../../../../../../../Desktop/SpriteAll/running/1.png"/>
+  </tile>
+  <tile id="6">
+   <image width="197" height="293" source="../../../../../../../Desktop/SpriteAll/running/2.png"/>
+  </tile>
+  <tile id="7">
+   <image width="212" height="290" source="../../../../../../../Desktop/SpriteAll/running/3.png"/>
+  </tile>
+  <tile id="8">
+   <image width="185" height="280" source="../../../../../../../Desktop/SpriteAll/running/4.png"/>
+  </tile>
+  <tile id="9">
+   <image width="177" height="290" source="../../../../../../../Desktop/SpriteAll/running/5.png"/>
+  </tile>
+  <tile id="10">
+   <image width="180" height="312" source="../../../../../../../Desktop/SpriteAll/jumping/1.png"/>
+  </tile>
+  <tile id="11">
+   <image width="211" height="291" source="../../../../../../../Desktop/SpriteAll/jumping/2.png"/>
+  </tile>
+  <tile id="12">
+   <image width="214" height="275" source="../../../../../../../Desktop/SpriteAll/jumping/3.png"/>
+  </tile>
+  <tile id="13">
+   <image width="214" height="272" source="../../../../../../../Desktop/SpriteAll/jumping/4.png"/>
+  </tile>
+  <tile id="14">
+   <image width="281" height="187" source="../../../../../../../Desktop/SpriteAll/jumping/5.png"/>
+  </tile>
+  <tile id="15">
+   <image width="256" height="256" source="../../../../../../../Desktop/SpriteAll/standing/sliping.png"/>
+  </tile>
+ </tileset>
+ <layer id="2" name="Tile Layer 1" width="4" height="1">
+  <data encoding="base64" compression="zlib">
+   eJxjZGBgYARiZiBmAWIAAFQACg==
+  </data>
+ </layer>
+</map>

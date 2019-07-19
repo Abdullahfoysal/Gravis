@@ -134,22 +134,22 @@ public class PlayScreen implements Screen {
 		
 		
 		///rotating camera and gravity
-		if(Gdx.input.isKeyJustPressed(Input.Keys.UP))
-		{
-			gamecam.rotate(player.b2body.getPosition().x,0,0,.002f*dt);
-			gavityDirection.x-=0.1f*dt;
-			gavityDirection.y+=0.1f*dt;
-			
-			
-		}
-		if(Gdx.input.isKeyJustPressed(Input.Keys.DOWN))
-		{
-			gamecam.rotate(player.b2body.getPosition().x,0,0,-.002f*dt);
-			gavityDirection.x+=0.1f*dt;
-			gavityDirection.y+=0.1f*dt;
-			
-			
-		}
+//		if(Gdx.input.isKeyJustPressed(Input.Keys.UP))
+//		{
+//			gamecam.rotate(player.b2body.getPosition().x,0,0,.002f*dt);
+//			gavityDirection.x-=0.1f*dt;
+//			gavityDirection.y+=0.1f*dt;
+//			
+//			
+//		}
+//		if(Gdx.input.isKeyJustPressed(Input.Keys.DOWN))
+//		{
+//			gamecam.rotate(player.b2body.getPosition().x,0,0,-.002f*dt);
+//			gavityDirection.x+=0.1f*dt;
+//			gavityDirection.y+=0.1f*dt;
+//			
+//			
+	//	}
 		
 
 		
@@ -167,12 +167,16 @@ public class PlayScreen implements Screen {
 	public void update(float dt) {
 		world.step(1f/60f, 8, 2);
 		handleInput(dt);
+		player.update(dt);
+		
 		
 		gamecam.position.x=player.b2body.getPosition().x;
 		//gamecam.rotate(player.b2body.getPosition().x,0,0,.002f*dt);
 	//	gamecam.rotate(axis, angle);
 		//update gravity direction
 		world.setGravity(gavityDirection);
+		
+		
 		gamecam.update();
 		renderer.setView(gamecam);
 		
