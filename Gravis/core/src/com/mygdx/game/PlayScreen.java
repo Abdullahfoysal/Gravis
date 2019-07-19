@@ -5,6 +5,8 @@ import java.util.Vector;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.MapObject;
@@ -52,13 +54,20 @@ public class PlayScreen implements Screen {
 	private TiledObjectUtil tiled;
 	private Vector2 gavityDirection=new Vector2(0,-9.8f);
 	
+	private Vector s=new Vector();
+	private Sprite sprite;
+	private Sprite a,b,c,d;
+	private Texture texture;
+	private float stateTimer=0f;
 	
 	public PlayScreen(gameClass game) {
 		this.game=game;
 		hud=new Hud(game.batch);
-		atlas=new TextureAtlas("Sprite/sprites.pack");
-		
-		
+	   texture=new Texture("Sprite/11.png");
+		sprite=new Sprite(texture);
+		loadSprite();
+		//sprite.setSize(134/gameClass.PPM,220/gameClass.PPM);
+			//sprite.setScale(.005f, .005f);
 		 world=new World(gavityDirection,true);
 		gamecam=new OrthographicCamera();//Gdx.graphics.getWidth()/10,Gdx.graphics.getHeight()/10
 		//gamecam.setToOrtho(false, 1000, 700);
@@ -67,20 +76,30 @@ public class PlayScreen implements Screen {
 		gamePort= new FitViewport(1000/gameClass.PPM,700/gameClass.PPM,gamecam);///screen height && width
 		
 		maploader=new TmxMapLoader();
-		map=maploader.load("map/mapdraw.tmx");
+		map=maploader.load("map/mapfinal.tmx");
 		
 		renderer=new OrthogonalTiledMapRenderer(map,1/gameClass.PPM);
 		gamecam.position.set(gamePort.getWorldHeight()/2,gamePort.getWorldHeight()/2,0);
 		
 		debugRenderer = new Box2DDebugRenderer();
+		
 	
 		//gamecam.position.set(Gdx.graphics.getWidth()/10,Gdx.graphics.getHeight()/10,0);
 		
-		
-		
-		TiledObjectUtil.parseTiledObjectLayer(world, map.getLayers().get("level1").getObjects());
+		//for ground map
 		
 		tiled=new TiledObjectUtil(world,map);
+		TiledObjectUtil.parseTiledObjectLayer(world, map.getLayers().get("ground").getObjects());
+		///above map
+		TiledObjectUtil.parseTiledObjectLayer(world, map.getLayers().get("spring").getObjects());
+		TiledObjectUtil.parseTiledObjectLayer(world, map.getLayers().get("flower").getObjects());
+		TiledObjectUtil.parseTiledObjectLayer(world, map.getLayers().get("spike").getObjects());
+		TiledObjectUtil.parseTiledObjectLayer(world, map.getLayers().get("prize").getObjects());
+		
+		
+	
+		
+		
 		
 		//player creation world with physics
 		player=new Player(world,this);
@@ -88,10 +107,7 @@ public class PlayScreen implements Screen {
 		
 	}
 	
-	public TextureAtlas getAtlas() {
-		return atlas;
-		
-	}
+	
 	@Override
 	public void render(float delta) {
 		update(delta);
@@ -105,7 +121,13 @@ public class PlayScreen implements Screen {
 		game.batch.setProjectionMatrix(gamecam.combined);
 		
 		game.batch.begin();
-		player.draw(game.batch);
+		//player.draw(game.batch);
+		for(int i=0;i<s.size();i++) {
+			sprite=(Sprite) s.get(i);
+
+		game.batch.draw(sprite,0.45f+player.b2body.getPosition().x-sprite.getWidth()/2/gameClass.PPM,0.1f+player.b2body.getPosition().y-sprite.getHeight()/2/gameClass.PPM/3, 134/gameClass.PPM/2, 220/gameClass.PPM/2);
+		
+		}
 		game.batch.end();
 		
 		game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
@@ -132,26 +154,7 @@ public class PlayScreen implements Screen {
 		if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x>=-2)
 			player.b2body.applyLinearImpulse(new Vector2(-0.1f,0), player.b2body.getWorldCenter(), true);
 		
-		
-		///rotating camera and gravity
-//		if(Gdx.input.isKeyJustPressed(Input.Keys.UP))
-//		{
-//			gamecam.rotate(player.b2body.getPosition().x,0,0,.002f*dt);
-//			gavityDirection.x-=0.1f*dt;
-//			gavityDirection.y+=0.1f*dt;
-//			
-//			
-//		}
-//		if(Gdx.input.isKeyJustPressed(Input.Keys.DOWN))
-//		{
-//			gamecam.rotate(player.b2body.getPosition().x,0,0,-.002f*dt);
-//			gavityDirection.x+=0.1f*dt;
-//			gavityDirection.y+=0.1f*dt;
-//			
-//			
-	//	}
-		
-
+	
 		
 		
 		
@@ -167,7 +170,8 @@ public class PlayScreen implements Screen {
 	public void update(float dt) {
 		world.step(1f/60f, 8, 2);
 		handleInput(dt);
-		player.update(dt);
+		playerAnimation(dt);
+		
 		
 		
 		gamecam.position.x=player.b2body.getPosition().x;
@@ -237,6 +241,30 @@ public class PlayScreen implements Screen {
 	world.dispose();
 	debugRenderer.dispose();
 		
+	}
+	
+	public void loadSprite() {
+		a=new Sprite(new Texture("Sprite/11.png"));
+		b=new Sprite(new Texture("Sprite/22.png"));
+		c=new Sprite(new Texture("Sprite/33.png"));
+		d=new Sprite(new Texture("Sprite/44.png"));
+		
+		s.add(a);
+		s.add(b);
+		s.add(c);
+		s.add(d);
+		
+	}
+	public void playerAnimation(float dt) {
+		
+//		stateTimer+=dt;
+//		if(stateTimer>0.01)
+//		for(int i=0;i<s.size();i++) {
+//			sprite=(Sprite) s.get(i);
+//			player.update(dt,sprite);
+//			
+//			
+//		}
 	}
 
 }

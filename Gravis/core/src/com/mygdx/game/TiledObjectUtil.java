@@ -28,7 +28,7 @@ public class TiledObjectUtil {
 			PolygonShape shape=new PolygonShape();
 			FixtureDef fdef=new FixtureDef();
 			Body body;
-            for(MapObject object:map.getLayers().get(1).getObjects().getByType(RectangleMapObject.class)) {
+            for(MapObject object:map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)) {
 				
 				 rect=((RectangleMapObject) object).getRectangle();
 				bdef.type=BodyDef.BodyType.StaticBody;
