@@ -34,7 +34,7 @@ import Scenes.Hud;
 
 public class PlayScreen implements Screen {
 	
-
+	private int pospos=-1;
 	private gameClass game;
 	private Hud hud;
 	private TextureAtlas atlas;
@@ -106,12 +106,18 @@ public class PlayScreen implements Screen {
 		
 		
 	}
-	
+	public int givePos()
+	{
+		int x=6;
+		pospos++;
+		pospos%=(4*x);
+		return (pospos/x);
+	}
 	
 	@Override
 	public void render(float delta) {
 		update(delta);
-		
+		int pos=givePos();
 		Gdx.gl.glClearColor (0,0,0,1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
@@ -122,12 +128,14 @@ public class PlayScreen implements Screen {
 		
 		game.batch.begin();
 		//player.draw(game.batch);
-		for(int i=0;i<s.size();i++) {
-			sprite=(Sprite) s.get(i);
-
+//		for(int i=0;i<s.size();i++) {
+//			sprite=(Sprite) s.get(i);
+//
+//		game.batch.draw(sprite,0.45f+player.b2body.getPosition().x-sprite.getWidth()/2/gameClass.PPM,0.1f+player.b2body.getPosition().y-sprite.getHeight()/2/gameClass.PPM/3, 134/gameClass.PPM/2, 220/gameClass.PPM/2);
+//		
+//		}
+		sprite=(Sprite) s.get(pos);
 		game.batch.draw(sprite,0.45f+player.b2body.getPosition().x-sprite.getWidth()/2/gameClass.PPM,0.1f+player.b2body.getPosition().y-sprite.getHeight()/2/gameClass.PPM/3, 134/gameClass.PPM/2, 220/gameClass.PPM/2);
-		
-		}
 		game.batch.end();
 		
 		game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
